@@ -1,13 +1,14 @@
 import './App.css'
-import { Navbar } from './components'
+import { products as sampleProducts } from './components/helpers/products'
+
+import { Navbar } from './components/layouts'
+import { LandingPage } from './components/molecules'
 
 function App() {
   return (
     <>
-      <div className="grid">
-        <Navbar />
-        <h1>This is a demo</h1>
-      </div>
+      <Navbar />
+      <LandingPage products={sampleProducts} />
     </>
   )
 }
