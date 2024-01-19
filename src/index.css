@@ -2,13 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Work on refactoring css (1/17//2024) */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: hsl(0, 0%, 0%);
   background-color: hsl(0, 0%, 94%);
 
@@ -18,23 +16,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+html, body {
   margin: 0;
   padding: 0;
-  display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  position: relative;;
+  height: 100%;
+  width: 100%;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-@media (prefers-color-schemes: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
 }

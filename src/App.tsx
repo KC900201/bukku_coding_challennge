@@ -1,7 +1,7 @@
 import './App.css'
 import { products as sampleProducts } from './components/helpers/products'
 
-import { Navbar } from './components/layouts'
+import { Navbar, Footer } from './components/layouts'
 import { LandingPage } from './components/molecules'
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
     <>
       <Navbar />
       <LandingPage products={sampleProducts} />
+      <Footer />
     </>
   )
 }

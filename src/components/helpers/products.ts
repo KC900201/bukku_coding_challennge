@@ -28,4 +28,11 @@ export const products: ProductInterface[] = [
     imageAlt: "Front of men's Basic Tee in black.",
     price: 25.00,
   },
+  {
+    id: 4,
+    name: 'Basic Tee',
+    imageSrc: "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-04.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+    price: 30.00,
+  },
 ]
