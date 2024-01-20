@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  caret-color: transparent;
+}
+
 /* Work on refactoring css (1/17//2024) */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

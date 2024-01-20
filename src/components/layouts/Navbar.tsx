@@ -1,15 +1,34 @@
 import React from 'react'
 
+import { DropDown } from '../atoms'
+
 type Props = {
   children: React.ReactNode
   onRedirectPage: () => void
 }
 
 type NavbarProps = {
+  isMerchant: boolean
   redirectPage: React.Dispatch<React.SetStateAction<string>>
+  setIsMerchant: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Navbar = ({ redirectPage }: NavbarProps) => {
+const ListItem = ({ children, onRedirectPage }: Props) => {
+  return (
+    <>
+      <li>
+        <a
+          className="flex py-2 text-base font-medium text-body-color hover:text-dark dark:text-dark-6 dark:hover:text-white lg:ml-12 lg:inline-flex cursor-pointer"
+          onClick={onRedirectPage}
+        >
+          {children}
+        </a>
+      </li>
+    </>
+  )
+}
+
+const Navbar = ({ redirectPage, isMerchant, setIsMerchant }: NavbarProps) => {
   return (
     <header className={`flex w-full items-center bg-white dark:bg-dark`}>
       <div className="container">
@@ -38,24 +57,26 @@ const Navbar = ({ redirectPage }: NavbarProps) => {
                   <ListItem onRedirectPage={() => redirectPage('landing')}>
                     Home
                   </ListItem>
-                  <ListItem onRedirectPage={() => redirectPage('purchase')}>
-                    Purchase
-                  </ListItem>
-                  <ListItem
-                    onRedirectPage={() => redirectPage('purchase_history')}
-                  >
-                    Purchase History
-                  </ListItem>
-                  <ListItem onRedirectPage={() => redirectPage('sales')}>
-                    Sales
-                  </ListItem>
-                  <ListItem
-                    onRedirectPage={() => redirectPage('sales_history')}
-                  >
-                    Sales History
-                  </ListItem>
+                  {isMerchant && (
+                    <ListItem
+                      onRedirectPage={() => redirectPage('purchase_history')}
+                    >
+                      Purchase History
+                    </ListItem>
+                  )}
+                  {!isMerchant && (
+                    <ListItem
+                      onRedirectPage={() => redirectPage('sales_history')}
+                    >
+                      Sales History
+                    </ListItem>
+                  )}
                 </ul>
               </nav>
+            </div>
+            {/* Dropdown list */}
+            <div className="justify-end pr-16 sm:flex lg:pr-0">
+              <DropDown isMerchant={isMerchant} setIsMerchant={setIsMerchant} />
             </div>
           </div>
         </div>
@@ -65,18 +86,3 @@ const Navbar = ({ redirectPage }: NavbarProps) => {
 }
 
 export default Navbar
-
-const ListItem = ({ children, onRedirectPage }: Props) => {
-  return (
-    <>
-      <li>
-        <a
-          className="flex py-2 text-base font-medium text-body-color hover:text-dark dark:text-dark-6 dark:hover:text-white lg:ml-12 lg:inline-flex cursor-pointer"
-          onClick={onRedirectPage}
-        >
-          {children}
-        </a>
-      </li>
-    </>
-  )
-}

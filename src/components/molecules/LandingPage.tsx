@@ -24,7 +24,10 @@ function LandingPage({ products }: { products: ProductInterface[] }) {
                 <div>
                   <h3 className="text-sm text-gray-700">
                     <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0">
+                      <span
+                        aria-hidden="true"
+                        className="absolute pt-2 inset-0"
+                      >
                         {product.name}
                       </span>
                     </a>
