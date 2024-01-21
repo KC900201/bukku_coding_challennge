@@ -1,4 +1,4 @@
-export interface ProductInterface {
+export type ProductType = {
   id: number,
   name: string,
   imageSrc: string,
@@ -6,7 +6,7 @@ export interface ProductInterface {
   price: number
 }
 
-export const products: ProductInterface[] = [
+export const products: ProductType[] = [
   {
     id: 1,
     name: 'Basic Tee',

@@ -1,6 +1,6 @@
-import { ProductInterface } from '../helpers/products'
+import { type ProductType } from '../helpers/products'
 
-function LandingPage({ products }: { products: ProductInterface[] }) {
+function LandingPage({ products }: { products: ProductType[] }) {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -34,7 +34,7 @@ function LandingPage({ products }: { products: ProductInterface[] }) {
                   </h3>
                 </div>
                 <p className="text-sm font-medium text-gray-900">
-                  {`MYR ${product.price}`}
+                  {`MYR ${product.price.toFixed(2)}`}
                 </p>
               </div>
             </div>
