@@ -1,12 +1,18 @@
 import { format as formatDate } from 'date-fns'
+import { TransactionHistoryType, products } from '../../helpers'
 
 const TdStyle = {
   ThStyle: `border-none text-base`,
   TdStyle: `text-base text-gray-500 font-medium`,
 }
 
-// Continue here (1/21/2024)
-function TransactionListPageTemplate() {
+function TransactionListPageTemplate({
+  transactionHistory,
+  isMerchant,
+}: {
+  transactionHistory: TransactionHistoryType[]
+  isMerchant: boolean
+}) {
   return (
     <section className="bg-white">
       <div
@@ -17,7 +23,7 @@ function TransactionListPageTemplate() {
         {/* Title */}
         <div className="grid gap-3">
           <h1 className="text-left text-3xl font-bold tracking-tight text-gray-900">
-            Sales History
+            {isMerchant ? 'Purchase' : 'Sales'} History
           </h1>
           <h3 className="text-left text-xl tracking-tight text-gray-500">
             Check the status of recent orders
@@ -38,16 +44,44 @@ function TransactionListPageTemplate() {
                 </tr>
               </thead>
               <tbody className="text-left bg-white font-medium">
-                <tr className="border-solid border-t-gray-600">
-                  <td className={TdStyle.TdStyle}>
-                    {formatDate('2/1/2024', 'do MMM yyyy')}
-                  </td>
-                  <td className={TdStyle.TdStyle}>SL-00001</td>
-                  <td className={TdStyle.TdStyle}>Basic Tee</td>
-                  <td className={TdStyle.TdStyle}>25.00</td>
-                  <td className={TdStyle.TdStyle}>12</td>
-                  <td className={TdStyle.TdStyle}>300.00</td>
-                </tr>
+                {transactionHistory.map(
+                  (transHistoryItem: TransactionHistoryType) => {
+                    const totalAmount = transHistoryItem.isPurchase
+                      ? transHistoryItem.purchasePrice *
+                        transHistoryItem.quantity
+                      : (transHistoryItem.salesPrice as number) *
+                        transHistoryItem.quantity
+
+                    const selectedProduct = products.find(
+                      (item) => item.id === transHistoryItem.productID
+                    )
+
+                    return (
+                      <tr className="border-solid border-t-gray-600">
+                        <td className={TdStyle.TdStyle}>
+                          {formatDate(transHistoryItem.date, 'do MMM yyyy')}
+                        </td>
+                        <td className={TdStyle.TdStyle}>
+                          {transHistoryItem.transactionID}
+                        </td>
+                        <td className={TdStyle.TdStyle}>
+                          {selectedProduct?.name ?? 'NA'}
+                        </td>
+                        <td className={TdStyle.TdStyle}>
+                          {transHistoryItem.isPurchase
+                            ? transHistoryItem.purchasePrice
+                            : transHistoryItem.salesPrice}
+                        </td>
+                        <td className={TdStyle.TdStyle}>
+                          {transHistoryItem.quantity}
+                        </td>
+                        <td className={TdStyle.TdStyle}>
+                          {totalAmount.toFixed(2)}
+                        </td>
+                      </tr>
+                    )
+                  }
+                )}
               </tbody>
             </table>
           </div>

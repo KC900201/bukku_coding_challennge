@@ -22,8 +22,12 @@ function App() {
         setIsMerchant={setIsMerchant}
       />
       {page === 'landing' && <LandingPage products={sampleProducts} />}
-      {page === 'purchase_history' && <PurchaseTransactionListPage />}
-      {page === 'sales_history' && <SalesTransactionListPage />}
+      {page === 'purchase_history' && (
+        <PurchaseTransactionListPage isMerchant={isMerchant} />
+      )}
+      {page === 'sales_history' && (
+        <SalesTransactionListPage isMerchant={isMerchant} />
+      )}
 
       <Footer />
     </>
