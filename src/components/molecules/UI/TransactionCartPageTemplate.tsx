@@ -1,13 +1,37 @@
 import { Fragment, useState, useMemo } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import {
+  XMarkIcon,
+  PlusCircleIcon,
+  MinusCircleIcon,
+} from '@heroicons/react/24/outline'
 
 import { ProductType } from '../../helpers/products'
 
-// Continue here (1/21/2024)
-function TransactionCartPageTemplate({ product }: { product: ProductType }) {
-  const [open, setOpen] = useState(true)
-  const [quantity, setQuantity] = useState<number>(0)
+export interface TransactionPageInterface {
+  open: boolean
+  isMerchant: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  product: ProductType
+}
+
+function TransactionCartPageTemplate({
+  open,
+  isMerchant,
+  setOpen,
+  product,
+}: TransactionPageInterface) {
+  const [quantity, setQuantity] = useState<number>(1)
+
+  // confirm checkout
+  const confirmCheckout = () => {
+    if (quantity <= 0) {
+      window.alert('Please input the correct amount.')
+    } else {
+      setOpen(false)
+      window.alert('Your order has been confirmed and is now being processed.')
+    }
+  }
 
   // total price and calculation
   const subTotal = useMemo(() => {
@@ -49,7 +73,7 @@ function TransactionCartPageTemplate({ product }: { product: ProductType }) {
                       {/* Title and close window */}
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900">
-                          Shopping cart
+                          {isMerchant ? 'Purchase Cart' : 'Shopping Cart'}
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
@@ -83,7 +107,9 @@ function TransactionCartPageTemplate({ product }: { product: ProductType }) {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>{product.name}</h3>
-                                    <p className="ml-4">{product.price}</p>
+                                    <p className="ml-4">
+                                      {product.price.toFixed(2)}
+                                    </p>
                                   </div>
                                 </div>
                                 <div className="flex flex-1 items-end justify-between text-sm">
@@ -95,15 +121,22 @@ function TransactionCartPageTemplate({ product }: { product: ProductType }) {
                                   </p>
 
                                   <div className="flex items-center space-x-1">
-                                    <button
-                                      onClick={() => setQuantity(quantity - 1)}
-                                    >
-                                      -
-                                    </button>
+                                    {quantity > 1 && (
+                                      <button
+                                        onClick={() =>
+                                          setQuantity(quantity - 1)
+                                        }
+                                      >
+                                        <MinusCircleIcon
+                                          width={20}
+                                          height={20}
+                                        />
+                                      </button>
+                                    )}
                                     <button
                                       onClick={() => setQuantity(quantity + 1)}
                                     >
-                                      +
+                                      <PlusCircleIcon width={20} height={20} />
                                     </button>
                                   </div>
                                 </div>
@@ -113,23 +146,23 @@ function TransactionCartPageTemplate({ product }: { product: ProductType }) {
                         </div>
                       </div>
                       {/* Subtotal and checkout section */}
-                      <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                        <div className="flex justify-between text-base font-medium text-gray-900">
+                      <div className="border-t border-gray-200 my-5 px-4 py-6 sm:px-6">
+                        <div className="w-full flex justify-between text-base font-medium text-gray-900">
                           <p>Subtotal</p>
-                          <p>MYR {subTotal}</p>
+                          <p>MYR {subTotal.toFixed(2)}</p>
                         </div>
                         <p className="mt-0.5 text-sm text-gray-500">
                           Shipping and taxes are included in the subtotal price
                         </p>
                         <div className="mt-6">
-                          <a
-                            href="#"
+                          <button
+                            onClick={confirmCheckout}
                             className="flex items-center justify-center rounded-md border
                                        border-transparent bg-indigo-600 px-6 py-3 text-base
-                                       font-medium text-white shadow-sm hover:bg-indigo-700"
+                                       font-medium text-white shadow-sm hover:bg-indigo-700 w-full"
                           >
                             Checkout
-                          </a>
+                          </button>
                         </div>
                       </div>
                     </div>

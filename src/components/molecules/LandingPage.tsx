@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { type ProductType } from '../helpers/products'
+import { PurchaseTransactionPage, SalesTrannsactionPage } from '.'
 
 function LandingPage({
   products,
@@ -7,6 +9,16 @@ function LandingPage({
   products: ProductType[]
   isMerchant: boolean
 }) {
+  const [openCart, setOpenCart] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
+    null
+  )
+
+  const proceedTransaction = (product: ProductType) => {
+    setSelectedProduct(product)
+    setOpenCart(true)
+  }
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -29,7 +41,7 @@ function LandingPage({
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <a href="#">
+                    <a onClick={() => proceedTransaction(product)}>
                       <span
                         aria-hidden="true"
                         className="absolute pt-2 inset-0"
@@ -47,6 +59,22 @@ function LandingPage({
           ))}
         </div>
       </div>
+      {openCart &&
+        (isMerchant ? (
+          <PurchaseTransactionPage
+            open={openCart}
+            setOpen={setOpenCart}
+            isMerchant={isMerchant}
+            product={selectedProduct as ProductType}
+          />
+        ) : (
+          <SalesTrannsactionPage
+            open={openCart}
+            setOpen={setOpenCart}
+            isMerchant={isMerchant}
+            product={selectedProduct as ProductType}
+          />
+        ))}
     </section>
   )
 }

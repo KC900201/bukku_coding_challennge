@@ -1,14 +1,22 @@
-import { ProductType } from '../helpers/products'
 import TransactionCartPageTemplate from './UI/TransactionCartPageTemplate'
+import { TransactionPageInterface } from './UI/TransactionCartPageTemplate'
 
 function SalesTrannsactionPage({
+  open,
+  setOpen,
+  isMerchant,
   product: salesProduct,
-}: {
-  product: ProductType
-}) {
+}: TransactionPageInterface) {
   // Include hooks to calculate sales price based on WAC
 
-  return <TransactionCartPageTemplate product={salesProduct} />
+  return (
+    <TransactionCartPageTemplate
+      open={open}
+      setOpen={setOpen}
+      isMerchant={isMerchant}
+      product={salesProduct}
+    />
+  )
 }
 
 export default SalesTrannsactionPage
