@@ -4,7 +4,7 @@ import { transactionHistory } from '../helpers'
 
 function SalesTransactionListPage({ isMerchant }: { isMerchant: boolean }) {
   const salesTransactionList = useMemo(
-    () => transactionHistory.filter((item) => !item.isPurchase),
+    () => transactionHistory.filter((item) => !item.isMerchantSales),
     []
   )
 

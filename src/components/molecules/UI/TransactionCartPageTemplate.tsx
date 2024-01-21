@@ -7,6 +7,7 @@ import {
 } from '@heroicons/react/24/outline'
 
 import { ProductType } from '../../helpers/products'
+import { calculateWACSalesPrice } from '../../hooks'
 
 export interface TransactionPageInterface {
   open: boolean
@@ -22,6 +23,9 @@ function TransactionCartPageTemplate({
   product,
 }: TransactionPageInterface) {
   const [quantity, setQuantity] = useState<number>(1)
+  const selectedPrice = isMerchant
+    ? product.price
+    : calculateWACSalesPrice(product.id)
 
   // confirm checkout
   const confirmCheckout = () => {
@@ -33,12 +37,10 @@ function TransactionCartPageTemplate({
     }
   }
 
-  // total price and calculation
+  // subTotal amount calculation
   const subTotal = useMemo(() => {
-    return quantity * product.price
-  }, [quantity, product])
-
-  // WIP - Function to save transaction into history list table (local storage)
+    return quantity * selectedPrice
+  }, [quantity, selectedPrice])
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -108,7 +110,7 @@ function TransactionCartPageTemplate({
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>{product.name}</h3>
                                     <p className="ml-4">
-                                      {product.price.toFixed(2)}
+                                      {selectedPrice.toFixed(2)}
                                     </p>
                                   </div>
                                 </div>

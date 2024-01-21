@@ -46,8 +46,8 @@ function TransactionListPageTemplate({
               <tbody className="text-left bg-white font-medium">
                 {transactionHistory.map(
                   (transHistoryItem: TransactionHistoryType) => {
-                    const totalAmount = transHistoryItem.isPurchase
-                      ? transHistoryItem.purchasePrice *
+                    const totalAmount = transHistoryItem.isMerchantSales
+                      ? transHistoryItem.merchantPrice *
                         transHistoryItem.quantity
                       : (transHistoryItem.salesPrice as number) *
                         transHistoryItem.quantity
@@ -56,8 +56,15 @@ function TransactionListPageTemplate({
                       (item) => item.id === transHistoryItem.productID
                     )
 
+                    const selectedPrice = transHistoryItem.isMerchantSales
+                      ? transHistoryItem.merchantPrice
+                      : transHistoryItem.salesPrice
+
                     return (
-                      <tr className="border-solid border-t-gray-600">
+                      <tr
+                        className="border-solid border-t-gray-600"
+                        key={`history-id-${transHistoryItem.id}`}
+                      >
                         <td className={TdStyle.TdStyle}>
                           {formatDate(transHistoryItem.date, 'do MMM yyyy')}
                         </td>
@@ -68,9 +75,7 @@ function TransactionListPageTemplate({
                           {selectedProduct?.name ?? 'NA'}
                         </td>
                         <td className={TdStyle.TdStyle}>
-                          {transHistoryItem.isPurchase
-                            ? transHistoryItem.purchasePrice
-                            : transHistoryItem.salesPrice}
+                          {selectedPrice?.toFixed(2) ?? '0.00'}
                         </td>
                         <td className={TdStyle.TdStyle}>
                           {transHistoryItem.quantity}
