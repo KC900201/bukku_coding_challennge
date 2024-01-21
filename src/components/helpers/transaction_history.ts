@@ -14,8 +14,8 @@ export type TransactionHistoryType = {
 export const transactionHistory: TransactionHistoryType[] = [
   {
     id: 1,
-    date: new Date("1/21/2024"),
-    transactionID: "PC-000000",
+    date: new Date("1/20/2024"),
+    transactionID: "PC-0",
     productID: sampleProducts[0].id,
     merchantPrice: 35.00,
     salesPrice: null,
@@ -25,7 +25,7 @@ export const transactionHistory: TransactionHistoryType[] = [
   {
     id: 2,
     date: new Date("1/20/2024"),
-    transactionID: "PC-000001",
+    transactionID: "PC-1",
     productID: sampleProducts[1].id,
     merchantPrice: sampleProducts[1].price,
     salesPrice: null,
@@ -34,8 +34,8 @@ export const transactionHistory: TransactionHistoryType[] = [
   },
   {
     id: 3,
-    date: new Date("1/21/2024"),
-    transactionID: "SL-000000",
+    date: new Date("1/20/2024"),
+    transactionID: "SL-0",
     productID: sampleProducts[2].id,
     merchantPrice: sampleProducts[2].price,
     salesPrice: 25.43,
@@ -45,7 +45,7 @@ export const transactionHistory: TransactionHistoryType[] = [
   {
     id: 4,
     date: new Date("1/18/2024"),
-    transactionID: "SL-000001",
+    transactionID: "SL-1",
     productID: sampleProducts[3].id,
     merchantPrice: sampleProducts[3].price,
     salesPrice: 33.44,
@@ -55,7 +55,7 @@ export const transactionHistory: TransactionHistoryType[] = [
   {
     id: 5,
     date: new Date("1/19/2024"),
-    transactionID: "PC-000002",
+    transactionID: "PC-2",
     productID: sampleProducts[0].id,
     merchantPrice: 45.00,
     salesPrice: 33.44,

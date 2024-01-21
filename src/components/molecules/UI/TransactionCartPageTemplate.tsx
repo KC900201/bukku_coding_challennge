@@ -11,7 +11,7 @@ import {
   type TransactionHistoryType,
   transactionHistory,
 } from '../../helpers'
-import { calculateWACSalesPrice } from '../../hooks'
+import { calculateWACSalesPrice, checkTransactionExists } from '../../hooks'
 
 export interface TransactionPageInterface {
   open: boolean
@@ -33,14 +33,24 @@ function TransactionCartPageTemplate({
 
   // confirm checkout
   const confirmCheckout = () => {
+    const today = new Date()
     const transactionCode = isMerchant ? 'PC-' : 'SL-'
+    const newTransactionNumber = transactionHistory.filter(
+      (item) => item.isMerchantSales === isMerchant
+    ).length
+
     if (quantity <= 0) {
       window.alert('Please input the correct amount.')
+    } else if (checkTransactionExists(today)) {
+      window.alert(
+        'Sorry, you cannot perform checkout as there has already been a transaction occurred today.'
+      )
+      setOpen(false)
     } else {
       const newTransactionRecord: TransactionHistoryType = {
         id: transactionHistory[transactionHistory.length - 1].id + 1,
-        date: new Date(),
-        transactionID: `${transactionCode}000003`,
+        date: today,
+        transactionID: `${transactionCode}${newTransactionNumber.toString()}`,
         productID: product.id,
         merchantPrice: product.price,
         salesPrice: selectedPrice,
