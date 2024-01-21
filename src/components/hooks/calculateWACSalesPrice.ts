@@ -1,10 +1,12 @@
 
-import {  transactionHistory } from "../helpers"
+import {  transactionHistory, products } from "../helpers"
 import { differenceInCalendarDays } from "date-fns"
 
 
 export const calculateWACSalesPrice = (selectedProductId: number) => {
   const today = new Date()
+
+  const originalProductPrice = products.find((item) => item.id === selectedProductId)?.price ?? 0
 
   // filter out the merchant sales history for selected product that the transaction date is no later than latest date
   const selectedProductMerchantPriceList = transactionHistory.filter((item) =>
@@ -22,7 +24,8 @@ export const calculateWACSalesPrice = (selectedProductId: number) => {
   );
 
   // total weight average cost will be the total weighted price / total quantity
-  return totalQuantity !== 0 ? totalWeightedPrice / totalQuantity : 0
+  // If there's no purchase history, revert to use original merchant price (from products array)
+  return totalQuantity !== 0 ? totalWeightedPrice / totalQuantity : originalProductPrice
 
 }
 
