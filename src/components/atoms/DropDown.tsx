@@ -36,7 +36,6 @@ const ClickOutsideHandler = (handler: () => void) => {
 const DropdownItem = ({ label, setIsMerchant }: DropdownItemInterface) => {
   const setAndRefreshWindow = () => {
     setIsMerchant(label === 'Buyer' ? false : true)
-    document.location.reload()
   }
 
   return (
