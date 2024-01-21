@@ -1,5 +1,6 @@
 import { format as formatDate } from 'date-fns'
 import { TransactionHistoryType, products } from '../../helpers'
+import { useEffect, useState } from 'react'
 
 const TdStyle = {
   ThStyle: `border-none text-base`,
@@ -13,6 +14,16 @@ function TransactionListPageTemplate({
   transactionHistory: TransactionHistoryType[]
   isMerchant: boolean
 }) {
+  const [sortedTransactionHistory, setSortedTransactionHistory] = useState<
+    TransactionHistoryType[]
+  >(transactionHistory.sort((a, b) => a.date.getTime() - b.date.getTime()))
+
+  useEffect(() => {
+    setSortedTransactionHistory(
+      transactionHistory.sort((a, b) => a.date.getTime() - b.date.getTime())
+    )
+  }, [transactionHistory, isMerchant])
+
   return (
     <section className="bg-white">
       <div
@@ -44,7 +55,7 @@ function TransactionListPageTemplate({
                 </tr>
               </thead>
               <tbody className="text-left bg-white font-medium">
-                {transactionHistory.map(
+                {sortedTransactionHistory.map(
                   (transHistoryItem: TransactionHistoryType) => {
                     const totalAmount = transHistoryItem.isMerchantSales
                       ? transHistoryItem.merchantPrice *

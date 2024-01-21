@@ -6,7 +6,11 @@ import {
   MinusCircleIcon,
 } from '@heroicons/react/24/outline'
 
-import { ProductType } from '../../helpers/products'
+import {
+  type ProductType,
+  type TransactionHistoryType,
+  transactionHistory,
+} from '../../helpers'
 import { calculateWACSalesPrice } from '../../hooks'
 
 export interface TransactionPageInterface {
@@ -29,9 +33,23 @@ function TransactionCartPageTemplate({
 
   // confirm checkout
   const confirmCheckout = () => {
+    const transactionCode = isMerchant ? 'PC-' : 'SL-'
     if (quantity <= 0) {
       window.alert('Please input the correct amount.')
     } else {
+      const newTransactionRecord: TransactionHistoryType = {
+        id: transactionHistory[transactionHistory.length - 1].id + 1,
+        date: new Date(),
+        transactionID: `${transactionCode}000003`,
+        productID: product.id,
+        merchantPrice: product.price,
+        salesPrice: selectedPrice,
+        quantity: quantity,
+        isMerchantSales: isMerchant,
+      }
+
+      transactionHistory.push(newTransactionRecord)
+
       setOpen(false)
       window.alert('Your order has been confirmed and is now being processed.')
     }
