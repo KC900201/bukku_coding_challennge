@@ -9,6 +9,8 @@ This is a mock application for users to log in as merchants or buyers to perform
 If the user logs in as a `merchant`, he can perform a stock purchase by selecting one of the available items on the landing page. A shopping cart page will appear once the user clicks on the selected product and the user can choose the quantity of items to be purchased.
 Once the user clicks on the `Checkout` button, the transaction is completed and a pop-up `message` will appear to signify the shipping process is ready to be processed. The user will be able to view the transaction record on the `Purchase History` page. If the user logs in as a `buyer`, he can perform a shopping transaction by following the same procedures and can view the sales transaction record on the `Sales History` page. However, when the user perform a sales transaction, the `sales price` is based on `Weighted Average Cost (WAC)` [calculation](https://corporatefinanceinstitute.com/resources/accounting/weighted-average-cost-method/). 
 
+A demo website can be accessed from [here](https://bukku-coding-challenge.netlify.app/)
+
 There are restrictions in performing the transaction:
  - User can only choose one product to purchase
  - Each transaction only has one product, but possible to have multiple items (quantity) for the product
