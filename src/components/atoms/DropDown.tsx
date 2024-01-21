@@ -34,9 +34,14 @@ const ClickOutsideHandler = (handler: () => void) => {
 }
 
 const DropdownItem = ({ label, setIsMerchant }: DropdownItemInterface) => {
+  const setAndRefreshWindow = () => {
+    setIsMerchant(label === 'Buyer' ? false : true)
+    document.location.reload()
+  }
+
   return (
     <a
-      onClick={() => setIsMerchant(label === 'Buyer' ? false : true)}
+      onClick={setAndRefreshWindow}
       className="text-body-color dark:text-dark-6 hover:bg-[#F5F7FD]
                  dark:hover:bg-primary/5 hover:text-primary block
                  px-5 py-2 text-base cursor-pointer flex flex-wrap justify-between gap-5"
